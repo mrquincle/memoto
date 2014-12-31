@@ -1,0 +1,213 @@
+Checking battery level
+OK
+Extracting firmware archive...
+memotocam-dataflashcardboot-3.1.bin
+memotocam-dataflashcardboot-3.1.bin.md5
+rootfs.ext2
+rootfs.ext2.md5
+uImage
+uImage.md5
+u-boot.bin
+u-boot.bin.md5
+git_status.txt
+hw_revision.txt
+update.sh.md5
+Checking hardware revision...
+R1D
+OK
+Calculating md5 sums
+Upgrading partitions on MMC flash
+Upgrading partitions on SPI flash
+Linux version 2.6.39+ (linusp@caustic) (gcc version 4.5.4 (Buildroot 2013.02-v0.4.6) ) #5 Mon Nov 25 05:08:19 CET 2013
+CPU: ARM926EJ-S [41069265] revision 5 (ARMv5TEJ), cr=00053177
+CPU: VIVT data cache, VIVT instruction cache
+Machine: Narrative Clip R1X
+Memory policy: ECC disabled, Data cache writeback
+Clocks: CPU 382 MHz, master 127 MHz, main 12.000 MHz
+On node 0 totalpages: 4096
+free_area_init_node: node 0, pgdat c029f82c, node_mem_map c02af000
+  Normal zone: 32 pages used for memmap
+  Normal zone: 0 pages reserved
+  Normal zone: 4064 pages, LIFO batch:0
+pcpu-alloc: s0 r0 d32768 u32768 alloc=1*32768
+pcpu-alloc: [0] 0 
+Built 1 zonelists in Zone order, mobility grouping off.  Total pages: 4064
+Kernel command line: mem=16M console=ttyS0,115200 slram=mtdram,0x21800000,+0x800000 root=/dev/mtdblock0 rw rootfstype=ext2 rootwait
+PID hash table entries: 64 (order: -4, 256 bytes)
+Dentry cache hash table entries: 2048 (order: 1, 8192 bytes)
+Inode-cache hash table entries: 1024 (order: 0, 4096 bytes)
+Memory: 16MB = 16MB total
+Memory: 13452k/13452k available, 2932k reserved, 0K highmem
+Virtual kernel memory layout:
+    vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+    fixmap  : 0xfff00000 - 0xfffe0000   ( 896 kB)
+    DMA     : 0xff000000 - 0xffe00000   (  14 MB)
+    vmalloc : 0xc1800000 - 0xfee00000   ( 982 MB)
+    lowmem  : 0xc0000000 - 0xc1000000   (  16 MB)
+    modules : 0xbf000000 - 0xc0000000   (  16 MB)
+      .init : 0xc0008000 - 0xc0025000   ( 116 kB)
+      .text : 0xc0025000 - 0xc0285658   (2434 kB)
+      .data : 0xc0286000 - 0xc029fee0   ( 104 kB)
+NR_IRQS:192
+AT91: 128 gpio irqs in 4 banks
+Console: colour dummy device 80x30
+console [ttyS0] enabled
+Calibrating delay loop... 189.84 BogoMIPS (lpj=949248)
+pid_max: default: 32768 minimum: 301
+Mount-cache hash table entries: 512
+CPU: Testing write buffer coherency: ok
+NET: Registered protocol family 16
+AT91: Narrative Clip
+AT91: Power Management (with slow clock mode)
+AT91: Starting after software reset
+tcb_clksrc: tc0 at 15.416 MHz
+bio: create slab <bio-0> at 0
+SCSI subsystem initialized
+i2c-gpio i2c-gpio.0: using pins 62 (SDA) and 63 (SCL)
+at_hdmac at_hdmac.0: Atmel AHB DMA Controller ( cpy slave ), 8 channels
+at_hdmac at_hdmac.1: Atmel AHB DMA Controller ( cpy slave ), 8 channels
+Switching to clocksource tcb_clksrc
+NET: Registered protocol family 2
+IP route cache hash table entries: 1024 (order: 0, 4096 bytes)
+TCP established hash table entries: 512 (order: 0, 4096 bytes)
+TCP bind hash table entries: 512 (order: -1, 2048 bytes)
+TCP: Hash tables configured (established 512 bind 512)
+TCP reno registered
+UDP hash table entries: 256 (order: 0, 4096 bytes)
+UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+NET: Registered protocol family 1
+NetWinder Floating Point Emulator V0.97 (double precision)
+msgmni has been set to 26
+io scheduler noop registered (default)
+atmel_usart.0: ttyS0 at MMIO 0xfefff200 (irq = 1) is a ATMEL_SERIAL
+brd: module loaded
+loop: module loaded
+Generic platform RAM MTD, (c) 2004 Simtec Electronics
+slram: devname = mtdram
+slram: devstart = 0x21800000
+slram: devlength = +0x800000
+slram: devname=mtdram, devstart=0x21800000, devlength=0x800000
+slram: Registered device mtdram from 548864KiB to 557056KiB
+slram: Mapped from 0xc2000000 to 0xc2800000
+atmel_spi atmel_spi.0: Using dma0chan0 (tx) and  dma0chan1 (rx) for DMA transfers
+atmel_spi atmel_spi.0: Atmel SPI Controller at 0xf0000000 (irq 13)
+atmel_spi atmel_spi.1: Using dma1chan0 (tx) and  dma1chan1 (rx) for DMA transfers
+atmel_spi atmel_spi.1: Atmel SPI Controller at 0xf0004000 (irq 14)
+atmel_usba_udc atmel_usba_udc: MMIO registers at 0xf803c000 mapped at c1814000
+atmel_usba_udc atmel_usba_udc: FIFO at 0x00500000 mapped at c1900000
+at91_rtc at91_rtc: rtc core: registered at91_rtc as rtc0
+AT91 Real Time Clock driver.
+i2c /dev entries driver
+AT91SAM9 Watchdog enabled (heartbeat=15 sec, nowayout=0)
+Registered led device: d1
+Registered led device: d2
+Registered led device: d3
+Registered led device: d4
+TCP cubic registered
+at91_rtc at91_rtc: setting system clock to 2007-01-01 00:05:43 UTC (1167609943)
+VFS: Mounted root (ext2 filesystem) on device 31:0.
+Freeing init memory: 116K
+lis3dh: LIS3DH found.
+akm8963_probe is called.
+akm8963_probe: asa_x = 160, asa_y = 162, asa_z = 153
+akm8963_probe is successful.
+atmel_mci atmel_mci.0: Using dma0chan2 for DMA transfers
+atmci init slot
+Queuing rescan
+detect pin: -22 valid: 0
+no detect pins, card present
+add host mmc
+add host mmc stuff
+atmel_mci atmel_mci.0: Atmel MCI controller at 0xf0008000 irq 12, 1 slots
+get_cd
+claim_host
+rescan 61a80
+mmc0: mmc_rescan_try_freq: trying to init card at 400000 Hz
+atmel_mci atmel_mci.0: command error: status=0x0c100025
+atmel_mci atmel_mci.0: command error: status=0x0c100025
+atmel_mci atmel_mci.0: command error: status=0x0c100025
+mmc0: BKOPS_EN bit is not set
+register_blkdev major: 179
+mmc0: new high speed MMC card at address 0001
+register ok!
+mmc_blk_alloc
+mmc_blk_alloc: mmcblk0 OK
+mmcblk0: mmc0:0001 SEM08G 7.28 GiB 
+mmcblk0: detected capacity change from 0 to 7818182656
+ mmcblk0: p1 p2 p3
+EXT4-fs (mmcblk0p3): mounted filesystem with ordered data mode. Opts: (null)
+gadgetfs: USB Gadget filesystem, version 24 Aug 2004
+gadgetfs: bound to atmel_usba_udc driver
+gadgetfs: connected
+gadgetfs: disconnected
+gadgetfs: connected
+gadgetfs: configuration #1
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: suspended from state 3
+gadgetfs: disconnected
+m25p80 spi0.0: mx25u4033e (512 Kbytes)
+Creating 2 MTD partitions on "spi_flash":
+0x000000000000-0x000000005000 : "at91bootstrap"
+0x000000005000-0x000000080000 : "u-boot"
