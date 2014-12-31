@@ -142,11 +142,67 @@ files from the device are obtained from endpoint `0x81`.
 The files are stored in the folder `/mnt/storage`. There will be `.jpg` files in there as well as `.meta.json` files.
 This folder has subfolders such as `140804_02`, and the files have `iSerial` as part of their filename. 
 
+## Usage
+
+You can use the script `memoto.py` to get a listing of files on the device. Not all directories are accessible though.
+To list the files in the storage directory:
+
+	python memoto.py list /mnt/storage
+
+This will give you a list like the following
+
+	140802_13
+	141231_07
+	140731_17
+	.gfs_options.dat
+	upgrade_log_140723_125516.txt
+	lost+found
+	hw_revision
+	upgrade_log_070101_000636.txt
+	.timestamp
+	os-release
+	error_log.txt
+	upgrade_log_141230_131052.txt
+
+Subsequently, you can take a look in the directories:
+
+	python memoto.py list /mnt/storage/140802_13
+
+To actually obtain a file:
+
+	python memoto.py file /mnt/storage/ upgrade_log_140723_125516.txt
+
+Note that here there is a space between the path and the file. Also note that there is a trailing '/'. I've to make all
+these things idiot proof later.
+
+To obtain all files in a certain directory, run:
+	
+	python memoto.py files /mnt/storage/140802_13
+
+However, this is a difficult one. That I couldn't script properly in a few hours without loosing some BULK request/
+response messages. So, don't be surprised if there are .jpg files in the .meta.json files, etc.
+
+## Further hack
+
+So, what I'm up to now? I've to own the device of course.
+
+* Upload a file through 0x10 instead of 0x09 (as in get a file)
+* Upload update.tar in /mnt/storage
+* Make sure it unpacks to /mnt/storage/update/update.sh
+
+Now I have to think what to put in `update.sh`. Any thoughts? How can I allow the entire device to be mounted on `/`?
+I've probably one chance. If you start to experiment: within the `update.sh` script, move it to some other place and
+run it from there. So, `update.sh` is not all the time started on reboot of the device. This is potentially bricking 
+your device!
+
 ## Protocol
 
-To be done.
+To be done. Read the python script for now
 
+## Copyrights
 
- 
+* Author: Anne van Rossum
+* License: LGPLv3, BSD, Apache, MIT, your choice
+* Date: 31st of December, 2014, 22:56 - I'm now gonna celebrate :-)
 
 
