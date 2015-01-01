@@ -9,13 +9,7 @@
 ############################################################################
 
 import sys
-#import platform
 import time
-#import socket
-#import re
-#import json
-#import urllib2
-#import base64
 import array
 
 import usb.core
@@ -27,29 +21,55 @@ import string
 
 ##########################  ENG CONFIG  #########################
 
-# The code...
-
-# Protocol command bytes
-IMAGE    = 0x01
-
-DEVICE = None
-DEVICE_TYPE = None
+dev = None
+dev_type = None
 
 output_path = "."
 
 ##########################  UTILITIES   #########################
 
-# From https://stackoverflow.com/questions/17195924/python-equivalent-of-unix-strings-utility
-def strings(filename, min=4):
-    with open(filename, "rb") as f:
-        result = ""
-        for c in f.read():
-            if c in string.printable:
-                result += c
-                continue
-            if len(result) >= min:
-                yield result
-            result = ""
+def print_strings(filename):
+    fd = open(filename, "rb")
+    fdata = fd.read()
+    fd.close()
+    data = bytearray(fdata)
+    cnt = 0
+    fcnt = 0;
+    print "Size of data: ", len(data)
+    while cnt < len(data):
+        #print ''.join('{:02x}'.format(x) for x in data[cnt:cnt+7])
+        if data[cnt+4] == 4:
+            print "Found directory: ",
+        else: 
+            print "Found file: ",
+        end = cnt+11*12
+        sret = ''.join([chr(x) for x in data[cnt+8:end]])
+        p = len(sret) - sret.count('\0')
+        print sret
+
+        if data[cnt+4] != 4:
+            size = data[cnt] + data[cnt+1] * 256
+            print "Size is: ", size, "bytes"
+
+        cnt = end
+        fcnt += 1
+    print "Found in total", fcnt, "files/directories"
+
+def strings(filename):
+    result = []
+    fd = open(filename, "rb")
+    fdata = fd.read()
+    fd.close()
+    data = bytearray(fdata)
+    cnt = 0
+    while cnt < len(data):
+        end = cnt+11*12
+        sret = ''.join([chr(x) for x in data[cnt+8:end]])
+        p = len(sret) - sret.count('\0')
+        result.append(sret[0:p])
+        cnt = end
+
+    return result
 
 ##########################  MAIN CODE   #########################
 
@@ -69,29 +89,31 @@ def usage():
 def setup_usb():
     # Tested only with the Cheeky Dream Thunder
     # and original USB Launcher
-    global DEVICE 
-    global DEVICE_TYPE
+    global dev 
+    global dev_type
 
-    DEVICE = usb.core.find(idVendor=0xf0f0, idProduct=0x1337)
+    dev = usb.core.find(idVendor=0xf0f0, idProduct=0x1337)
 
-    if DEVICE is None:
+    if dev is None:
         raise ValueError('Memoto device not found')
     else:
         print "Found Memoto device"
-        DEVICE_TYPE = "Memoto"
+        dev_type = "Memoto"
 
     # On Linux we need to detach usb HID first
-    if DEVICE.is_kernel_driver_active(0):
+    if dev.is_kernel_driver_active(0):
         print "Detach kernel driver"
-        DEVICE.detach_kernel_driver(0)
-        DEVICE.detach_kernel_driver(1)
+        dev.detach_kernel_driver(0)
+        dev.detach_kernel_driver(1)
 
     # Set configuration does NOT claim the interface, we need this
     print "Claim interface"
-    usb.util.claim_interface(DEVICE, 0) 
+    usb.util.claim_interface(dev, 0) 
 
 # asumes path ends with /
 def get_file(path, fname):
+    # this bulk IN message returns the path of the file to be retrieved (in binary)
+    # it needs to be running in the background, the ctrl_transfer message will cause it to receive
     filetype="FILE_REQ"
     threading.Thread(target=bulk, args=[filetype, fname]).start()
 
@@ -104,7 +126,7 @@ def get_file(path, fname):
     bmRequestType = 0x40
     bRequest = 0x02 
     wIndex = 0x00
-    ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, fullname)
+    ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, fullname)
  
     opath = output_path + path
     fullname = opath + fname
@@ -121,7 +143,34 @@ def get_file(path, fname):
     filetype = "JPEG"
     threading.Thread(target=bulk, args=[filetype, fullname]).start()
     
+def upload_file(path, fname):
+    #filetype="FILE_REQ"
+    #threading.Thread(target, args=[filetype, fname]).start()
+
+    #time.sleep(3)
+    #print "Send obtain file request"
+    #send_cmd(0xc00402)
+    
+    fullname = path + fname
+    print "Send file request", fullname
+    bmRequestType = 0x40
+    bRequest = 0x10 
+    wIndex = 0x00
+    ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, fullname)
+ 
+    opath = output_path + path
+    fullname = opath + fname
+    
+    filetype = "JPEG"
+    threading.Thread(target=bulk_out, args=[filetype, fullname]).start()
+
 def get_list(path):
+    tmpfile="list.txt"
+    try:
+        os.remove(tmpfile)
+    except OSError:
+        pass
+
     filetype="GET_LIST"
     threading.Thread(target=bulk, args=[filetype, path]).start()
 
@@ -133,9 +182,15 @@ def get_list(path):
     bmRequestType = 0x40
     bRequest = 0x09
     wIndex = 0x00
-    ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, path)
+    ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, path)
 
 def just_list(path):
+    tmpfile="list.txt"
+    try:
+        os.remove(tmpfile)
+    except OSError:
+        pass
+    
     filetype="LIST"
     threading.Thread(target=bulk, args=[filetype, path]).start()
 
@@ -147,11 +202,11 @@ def just_list(path):
     bmRequestType = 0x40
     bRequest = 0x09
     wIndex = 0x00
-    ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, path)
+    ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, path)
 
 
 def send_cmd(cmd, carg=""):
-    if "Memoto" != DEVICE_TYPE:
+    if "Memoto" != dev_type:
         return
 
     else:
@@ -161,14 +216,14 @@ def send_cmd(cmd, carg=""):
             bRequest = 0x05
             wIndex = 0x05
             msg = [ 0x00, 0x00, 0x00, 0x00]
-            ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, msg)
+            ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, msg)
 
         if cmd == 0xc020:
             bmRequestType = 0xc0
             bRequest = 0x20
             wIndex = 0x04
             length = 0x10
-            ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
+            ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
             #print ret
         # resulted in 0x28 and other stuff
 
@@ -178,7 +233,7 @@ def send_cmd(cmd, carg=""):
             bRequest = 0x20
             wIndex = 0x04
             length = newlen
-            ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
+            ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
            # print ret
         # resulted in WINUSB
 
@@ -187,14 +242,14 @@ def send_cmd(cmd, carg=""):
             bRequest = 0x04
             wIndex = 0x01
             length = (0x04 << 8) + 0x20
-            ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
+            ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
 
         if cmd == 0xc00402:
             bmRequestType = 0xc0
             bRequest = 0x04
             wIndex = 0x02
             length = (0x04 << 8) + 0x20
-            ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
+            ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
             sret = "".join([chr(x) for x in ret])
             print "Version:", sret
 
@@ -203,14 +258,14 @@ def send_cmd(cmd, carg=""):
             bRequest = 0x04
             wIndex = 0x03
             length = (0x04 << 8) + 0x20
-            ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
+            ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
 
         if cmd == 0xc00404:
             bmRequestType = 0xc0
             bRequest = 0x04
             wIndex = 0x04
             length = (0x04 << 8) + 0x20
-            ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
+            ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, length);
 
         if cmd == 0x400504:
             bmRequestType = 0x40
@@ -218,7 +273,7 @@ def send_cmd(cmd, carg=""):
             wIndex = 0x04
             #msg = [ 0x92, 0x87, 0xa2, 0x54]
             msg = [ 0x90, 0x40, 0xa3, 0x54]
-            ret = DEVICE.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, msg);
+            ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, msg);
             #print ret, '==', len(msg)
 
     #except:
@@ -228,18 +283,12 @@ def send_cmd(cmd, carg=""):
 def get_files(path, files):
         cnt = 0;
         for f in files:
-                print 'Search for "event" in filename'
-                start=f.find("event")
-                s = f[start:]
-                trpath = path + "/"
-                exclude = s.find("snap")
-                if exclude != -1:
-                        continue
-                get_file(trpath, s)
-                time.sleep(30)
-                cnt += 1
-                #if cnt == 4:
-                #        return
+            trpath = path + "/"
+            print "Get file", trpath, f
+            get_file(trpath, f)
+            print "Wait 5 seconds"
+            time.sleep(5)
+            cnt += 1
 
 def bulk(filetype, filename):
     try:
@@ -247,7 +296,7 @@ def bulk(filetype, filename):
         length = carg << 8; 
         # only after a long time the bulk transport will fail (required for large chunks, such as in images)
         timeout_sec = 30
-        ret = DEVICE.read(0x81, length, timeout_sec * 1000) 
+        ret = dev.read(0x81, length, timeout_sec * 1000) 
         if filetype == "JPEG":
             #print "Store chunk of length ", len(ret), " in ", filename
             data = bytearray(ret)
@@ -261,20 +310,28 @@ def bulk(filetype, filename):
         elif filetype == "LIST" or filetype == "GET_LIST":
             data = bytearray(ret)
             tmpfile="list.txt"
-            fd = open(tmpfile, "wb") # overwrite previous
+            fd = open(tmpfile, "ab") # append
             fd.write(data)
             fd.close()
-            if filetype == "GET_LIST":
+            print "Size of data: ", len(ret)
+            if len(ret) == 8316: # 8380 - 64
+                bulk(filetype,filename)
+            elif filetype == "GET_LIST":
+                print "Now obtain list"
                 bulk("LIST_OBTAIN", filename)
+            elif len(ret) == 132: # 132+64=196
+               # bulk(filetype+"_END",filename)
+               print "Empty folder"
             else:
-                fstr = strings(tmpfile)
-                print "Directory listing of ", filename
-                for s in fstr:     
-                    print s
+                bulk(filetype+"_END",filename)
+        elif filetype == "LIST_END":
+            tmpfile="list.txt"
+            print "Obtained list of strings:"
+            print_strings(tmpfile)
         elif filetype == "LIST_OBTAIN":
             tmpfile="list.txt"
             fstr = strings(tmpfile)
-            get_files(filename, list(fstr))
+            get_files(filename, fstr)
         elif filetype == "ACK":
             print "Received ack on request"
         elif filetype == "FILE_REQ":
@@ -287,39 +344,73 @@ def bulk(filetype, filename):
             print "Other?", filetype
             #print "Bulk return: ", sret
     except:
-        print 'One of the bulk commands failed. Timeout is often caused by sending one DEVICE.read too many'
+        print 'One of the bulk commands failed. Timeout is often caused by sending one dev.read too many'
         pass
 
+# doesn't work yet. how does the Memoto know enough bytes have been received!?
+def bulk_out(filetype, filename):
+    maxsize = 512
+    print "Need to write data in chunks of 512 bytes"
+    #data = bytearray(ret)
+    print "Open file locally", filename
+    fd = open(filename, "r") # read
+    data = fd.read()
+    fd.close()
+    #print data
+    lbuf = bytearray(4)
+    #lbuf[3] = 1 #len(data)
+    lbuf[3] = 0x01
+    #lbuf[2] = 0x15
+    #lbuf[1] = 0x58
+    #lbuf = bytearray(len(data))
+    #sret = ''.join([chr(x) for x in lbuf])
+    #print sret
+    ret = dev.write(0x02, lbuf, len(lbuf))
+    #time.sleep(0.1)
+    ret = dev.write(0x02, data, len(data))
+
+    try:
+        carg = 0x48;
+        length = carg << 8; 
+        ret = dev.read(0x02, length, 1000)
+    except:
+        print "Reading unsuccessful"
+        pass
+
+    # can I write something empty?
+    #lbuf = bytearray(0)
+    #ret = dev.write(0x02, lbuf, 0)
+
 def imitate_windows():
-    print "GET DESCRIPTOR Request DEVICE"
-    DESC_TYPE_DEVICE = 0x01
-    cfg = usb.control.get_descriptor(DEVICE, 0x12, DESC_TYPE_DEVICE, 0)
+    print "GET DESCRIPTOR Request dev"
+    DESC_TYPE_dev = 0x01
+    cfg = usb.control.get_descriptor(dev, 0x12, DESC_TYPE_dev, 0)
     #print cfg
 
     print "GET DESCRIPTOR Request CONFIGURATION"
     DESC_TYPE_CONFIG = 0x02
-    cfg = usb.control.get_descriptor(DEVICE, 0x09, DESC_TYPE_CONFIG, 0)
+    cfg = usb.control.get_descriptor(dev, 0x09, DESC_TYPE_CONFIG, 0)
     #print cfg
 
     print "GET DESCRIPTOR Request CONFIGURATION"
     DESC_TYPE_CONFIG = 0x02
-    cfg = usb.control.get_descriptor(DEVICE, 0x20, DESC_TYPE_CONFIG, 0)
+    cfg = usb.control.get_descriptor(dev, 0x20, DESC_TYPE_CONFIG, 0)
     #print cfg
 
     # then a request for 80: 6 3
     print "GET DESCRIPTOR Request STRING"
-    product = usb.util.get_string(DEVICE, DEVICE.iProduct)
+    product = usb.util.get_string(dev, dev.iProduct)
     
     # check for serial, 80: 6 1
     print "GET DESCRIPTOR Request STRING"
-    serial = usb.util.get_string(DEVICE, DEVICE.iSerialNumber)
+    serial = usb.util.get_string(dev, dev.iSerialNumber)
     
     print "SET CONFIGURATION Request"
-    config = usb.control.get_configuration(DEVICE)
+    config = usb.control.get_configuration(dev)
 
     # check for serial, 80: 6 1
     print "GET DESCRIPTOR Request STRING"
-    serial = usb.util.get_string(DEVICE, DEVICE.iSerialNumber)
+    serial = usb.util.get_string(dev, dev.iSerialNumber)
     #print 'Serial: ', str(serial)
    
     # two urb control in messages
@@ -332,34 +423,34 @@ def imitate_windows():
 
     # then a request for 80: 6 3
     print "GET DESCRIPTOR Request STRING"
-    product = usb.util.get_string(DEVICE, DEVICE.iProduct)
+    product = usb.util.get_string(dev, dev.iProduct)
     #print 'Product: ', str(product)
 
     # then a request for config
-    #print "GET DESCRIPTOR Request DEVICE"
-    #cfg = usb.util.find_descriptor(DEVICE, bConfigurationValue=6)
-    #config = DEVICE.get_active_configuration()
+    #print "GET DESCRIPTOR Request dev"
+    #cfg = usb.util.find_descriptor(dev, bConfigurationValue=6)
+    #config = dev.get_active_configuration()
     #print 'Product: ', str(config)
 
     # then a request for config
-    print "GET DESCRIPTOR Request DEVICE"
-    DESC_TYPE_DEVICE = 0x01
-    cfg = usb.control.get_descriptor(DEVICE, 0x12, DESC_TYPE_DEVICE, 0)
+    print "GET DESCRIPTOR Request dev"
+    DESC_TYPE_dev = 0x01
+    cfg = usb.control.get_descriptor(dev, 0x12, DESC_TYPE_dev, 0)
     #print cfg
 
     print "GET DESCRIPTOR Request CONFIGURATION"
     DESC_TYPE_CONFIG = 0x02
-    cfg = usb.control.get_descriptor(DEVICE, 0x09, DESC_TYPE_CONFIG, 0)
+    cfg = usb.control.get_descriptor(dev, 0x09, DESC_TYPE_CONFIG, 0)
     #print cfg
 
     print "GET DESCRIPTOR Request CONFIGURATION"
     DESC_TYPE_CONFIG = 0x02
-    cfg = usb.control.get_descriptor(DEVICE, 0x20, DESC_TYPE_CONFIG, 0)
+    cfg = usb.control.get_descriptor(dev, 0x20, DESC_TYPE_CONFIG, 0)
     #print cfg
 
     # status request
     print "GET STATUS REQUEST"
-    status = usb.control.get_status(DEVICE);
+    status = usb.control.get_status(dev);
     #print 'Status: ', str(status)
 
 def wake_up():
@@ -432,7 +523,12 @@ def run_command(command, values):
             fname = values[1]
 
         get_file(path, fname)
-  
+    elif command == "upload":
+        
+        path = values[0]
+        fname = values[1]
+
+        upload_file(path, fname)
     else:
         print "Error: Unknown command: '%s'" % command
 
