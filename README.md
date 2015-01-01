@@ -182,18 +182,37 @@ To obtain all files in a certain directory, run:
 However, this is a difficult one. That I couldn't script properly in a few hours without loosing some BULK request/
 response messages. So, don't be surprised if there are .jpg files in the .meta.json files, etc.
 
-## Further hack
+## Establishing an ethernet connection
 
-So, what I'm up to now? I've to own the device of course.
+What we need to do now is to upload a file. We are gonna upload a file using `0x10` instead of `0x09` (see code in 
+python script). Specifically, we are gonna upload the file `/mnt/storage/.dev_options.dat`. Its content is simply:
 
-* Upload a file through 0x10 instead of 0x09 (as in get a file)
-* Upload update.tar in /mnt/storage
-* Make sure it unpacks to /mnt/storage/update/update.sh
+	"ether": true
 
-Now I have to think what to put in `update.sh`. Any thoughts? How can I allow the entire device to be mounted on `/`?
-I've probably one chance. If you start to experiment: within the `update.sh` script, move it to some other place and
-run it from there. So, `update.sh` is not all the time started on reboot of the device. This is potentially bricking 
-your device!
+Upload it through;
+
+	python memoto.py upload /mnt/storage .dev_options.dat
+
+Reconnect your device and suddenly you will see another interface appearing if your kernel supports `usbnet`. This will all be automatically triggered, pretty neat from the kernel guys!
+
+The device is at `192.168.2.2`. A port scan reveals:
+
+	PORT   STATE SERVICE VERSION
+	21/tcp open  ftp     BusyBox ftpd (D-Link DCS-932L IP-Cam camera)
+	23/tcp open  telnet
+
+And sure `ftp 192.168.2.2` and `telnet 192.168.2.2` works just fine.
+
+A directory list can be found in [this file](memoto/blob/master/dump/files). Sorry, the command `tree` wasn't in their busybox installation, so it doesn't look so nice. :-)
+
+## GPS
+
+I understand that some people are really anxious in getting the GPS working properly. There is a file `/etc/init.d/S56aclys` which inserts the kernel module `/lib/modules/2.6.39+/extra/aclys_gpio.ko`. The `aclys_snap` file in `/bin` is quite small, just 15kB. So, there is no encryption done or things like that. Those snap files you can retrieve from the device is probably just raw data from the sensor.
+
+## Memoto daemon
+
+There is a `memotod` binary in `/bin`. This is only 62kB and seems to contain also very little. Most of the code is dedicated to reading the sensors and pushing it to the host device using Linux-USB Gadget framework or `gadgetfs`. This is a pretty neat piece of code that allows you to communicate through just reading and writing to `/dev/gadget`.
+
 
 ## Protocol
 

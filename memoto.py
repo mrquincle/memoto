@@ -152,7 +152,7 @@ def upload_file(path, fname):
     #send_cmd(0xc00402)
     
     fullname = path + fname
-    print "Send file request", fullname
+    print "Send upload file request", fullname
     bmRequestType = 0x40
     bRequest = 0x10 
     wIndex = 0x00
@@ -174,9 +174,7 @@ def get_list(path):
     filetype="GET_LIST"
     threading.Thread(target=bulk, args=[filetype, path]).start()
 
-    time.sleep(3)
-    print "Send obtain file request"
-    send_cmd(0xc00402)
+    time.sleep(0.2)
     
     print "Send file list request", path
     bmRequestType = 0x40
@@ -194,9 +192,7 @@ def just_list(path):
     filetype="LIST"
     threading.Thread(target=bulk, args=[filetype, path]).start()
 
-    time.sleep(3)
-    print "Send obtain file request"
-    send_cmd(0xc00402)
+    time.sleep(0.2)
     
     print "Send file list request", path
     bmRequestType = 0x40
@@ -358,28 +354,45 @@ def bulk_out(filetype, filename):
     fd.close()
     #print data
     lbuf = bytearray(4)
-    #lbuf[3] = 1 #len(data)
-    lbuf[3] = 0x01
-    #lbuf[2] = 0x15
-    #lbuf[1] = 0x58
+    lbuf[3] = 0 #len(data)
+    lbuf[2] = 0
+    lbuf[1] = 0
+    lbuf[0] = len(data)
+    if len(data) > 256:
+        print "OOPS, needs to be implemented"
     #lbuf = bytearray(len(data))
     #sret = ''.join([chr(x) for x in lbuf])
     #print sret
+    print "Write size of the data to be sent"
     ret = dev.write(0x02, lbuf, len(lbuf))
     #time.sleep(0.1)
+
+
+    print "Write data itself"
     ret = dev.write(0x02, data, len(data))
+    #ret = dev.write(0x02, data, len(data))
+    #ret = dev.write(0x02, data, len(data))
 
-    try:
-        carg = 0x48;
-        length = carg << 8; 
-        ret = dev.read(0x02, length, 1000)
-    except:
-        print "Reading unsuccessful"
-        pass
-
+    #try:
+    #    carg = 0x48
+    #    length = carg << 8
+    #    length = 5
+    #    print "Read something"
+    #    ret = dev.read(0x81, length, 1000)
+    #except:
+    #    print "Reading unsuccessful"
+    #    pass
     # can I write something empty?
-    #lbuf = bytearray(0)
-    #ret = dev.write(0x02, lbuf, 0)
+    lbuf = bytearray(0)
+    ret = dev.write(0x02, lbuf, 0)
+
+    # I missed apparently one 13376 item (with overhead), and all items are 64 overhead
+    # < bulk |tr -s "  " " " | cut -f7 -d' ' | wc -l                
+    # 1111 (items in total)
+    # first item has 4 bytes, so we have to extract that too
+    # < bulk |tr -s "  " " " | cut -f7 -d' ' | paste -sd+ | xargs -I {} echo {}"-1111*64-4+(13376-64)" | bc
+    # echo printf("%i",0x01155800)
+    # 18176000
 
 def imitate_windows():
     print "GET DESCRIPTOR Request dev"
