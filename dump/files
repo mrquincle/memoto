@@ -1,0 +1,473 @@
+ls: etc/resolv.conf: No such file or directory
+bin/aclys_snap              dev/loop0                   dev/ttyp7                   proc/stat
+bin/ash                     dev/loop1                   dev/ttyp8                   proc/timer_list
+bin/busybox                 dev/mem                     dev/ttyp9                   proc/uptime
+bin/cat                     dev/mmcblk0                 dev/urandom                 proc/version
+bin/catv                    dev/mmcblk0p1               dev/watchdog                proc/vmallocinfo
+bin/chattr                  dev/mmcblk0p2               dev/zero                    proc/vmstat
+bin/chgrp                   dev/mmcblk0p3               etc/adjtime                 proc/zoneinfo
+bin/chmod                   dev/mmcblk0p4               etc/fstab                   run/ifstate
+bin/chown                   dev/mmcblk0p5               etc/group                   run/ledd_ctrl
+bin/cp                      dev/mmcblk0p6               etc/hostname                run/log
+bin/cpio                    dev/mmt_vid                 etc/hosts                   run/messages
+bin/date                    dev/mtd0                    etc/hw_revision             run/utmp
+bin/dd                      dev/mtd1                    etc/inetd.conf              sbin/blkid
+bin/df                      dev/mtd2                    etc/inittab                 sbin/blockdev
+bin/dmesg                   dev/mtd3                    etc/inputrc                 sbin/ctrlaltdel
+bin/dnsdomainname           dev/mtdblock0               etc/issue                   sbin/devmem
+bin/dumpkmap                dev/mtdblock1               etc/ld.so.conf              sbin/fdisk
+bin/echo                    dev/mtdblock2               etc/mke2fs.conf             sbin/findfs
+bin/egrep                   dev/mtdblock3               etc/mtab                    sbin/freeramdisk
+bin/false                   dev/null                    etc/nsswitch.conf           sbin/fsck
+bin/fdflush                 dev/ptmx                    etc/os-release              sbin/fsck.minix
+bin/fgrep                   dev/ptyp0                   etc/passwd                  sbin/fsfreeze
+bin/getopt                  dev/ptyp1                   etc/profile                 sbin/fstrim
+bin/grep                    dev/ptyp2                   etc/protocols               sbin/getty
+bin/gunzip                  dev/ptyp3                   etc/random-seed             sbin/halt
+bin/gzip                    dev/ptyp4                   etc/securetty               sbin/hdparm
+bin/hostname                dev/ptyp5                   etc/services                sbin/hwclock
+bin/kill                    dev/ptyp6                   etc/shadow                  sbin/ifconfig
+bin/linux32                 dev/ptyp7                   lib/ld-uClibc-0.9.33.2.so   sbin/ifdown
+bin/linux64                 dev/ptyp8                   lib/ld-uClibc.so.0          sbin/ifup
+bin/ln                      dev/ptyp9                   lib/libblkid.so.1           sbin/init
+bin/login                   dev/ram                     lib/libblkid.so.1.1.0       sbin/insmod
+bin/ls                      dev/ram0                    lib/libc.so.0               sbin/ip
+bin/lsattr                  dev/ram1                    lib/libcrypt-0.9.33.2.so    sbin/ipaddr
+bin/lsblk                   dev/ram2                    lib/libcrypt.so.0           sbin/iplink
+bin/memotod                 dev/ram3                    lib/libdl-0.9.33.2.so       sbin/iproute
+bin/mkdir                   dev/random                  lib/libdl.so.0              sbin/iprule
+bin/mknod                   dev/rtc                     lib/libgcc_s.so             sbin/iptunnel
+bin/mktemp                  dev/sda                     lib/libgcc_s.so.1           sbin/klogd
+bin/mmt_usb_driver          dev/sda1                    lib/libm-0.9.33.2.so        sbin/ldconfig
+bin/more                    dev/sda2                    lib/libm.so.0               sbin/loadkmap
+bin/mount                   dev/sda3                    lib/libnsl-0.9.33.2.so      sbin/losetup
+bin/mountpoint              dev/sda4                    lib/libnsl.so.0             sbin/lsmod
+bin/mt                      dev/sda5                    lib/libpthread-0.9.33.2.so  sbin/makedevs
+bin/mv                      dev/sda6                    lib/libpthread.so.0         sbin/mdev
+bin/netstat                 dev/sda7                    lib/libresolv-0.9.33.2.so   sbin/mkdosfs
+bin/nice                    dev/sda8                    lib/libresolv.so.0          sbin/mke2fs
+bin/pidof                   dev/sdb                     lib/librt-0.9.33.2.so       sbin/mkfs
+bin/ping                    dev/sdb1                    lib/librt.so.0              sbin/mkfs.bfs
+bin/pipe_progress           dev/sdb2                    lib/libuClibc-0.9.33.2.so   sbin/mkfs.ext2
+bin/printenv                dev/sdb3                    lib/libutil-0.9.33.2.so     sbin/mkfs.minix
+bin/ps                      dev/sdb4                    lib/libutil.so.0            sbin/mkfs.vfat
+bin/pwd                     dev/sdb5                    lib/libuuid.so.1            sbin/mkswap
+bin/rm                      dev/sdb6                    lib/libuuid.so.1.3.0        sbin/modprobe
+bin/rmdir                   dev/sdb7                    proc/buddyinfo              sbin/nameif
+bin/run-parts               dev/sdb8                    proc/cmdline                sbin/pivot_root
+bin/sed                     dev/spidev1.1               proc/consoles               sbin/poweroff
+bin/setarch                 dev/tty                     proc/cpuinfo                sbin/reboot
+bin/setserial               dev/tty0                    proc/crypto                 sbin/rmmod
+bin/sh                      dev/tty1                    proc/devices                sbin/route
+bin/sleep                   dev/tty2                    proc/diskstats              sbin/runlevel
+bin/stty                    dev/tty3                    proc/execdomains            sbin/setconsole
+bin/su                      dev/tty4                    proc/filesystems            sbin/sfdisk
+bin/sync                    dev/tty5                    proc/interrupts             sbin/start-stop-daemon
+bin/tar                     dev/tty6                    proc/iomem                  sbin/sulogin
+bin/touch                   dev/tty7                    proc/ioports                sbin/swaplabel
+bin/true                    dev/ttyP0                   proc/kallsyms               sbin/swapoff
+bin/umount                  dev/ttyP1                   proc/kmsg                   sbin/swapon
+bin/uname                   dev/ttyP2                   proc/kpagecount             sbin/switch_root
+bin/usleep                  dev/ttyP3                   proc/kpageflags             sbin/sysctl
+bin/vi                      dev/ttyS0                   proc/loadavg                sbin/syslogd
+bin/watch                   dev/ttyS1                   proc/locks                  sbin/vconfig
+bin/zcat                    dev/ttyS2                   proc/meminfo                sbin/watchdog
+dev/aclys_gpio              dev/ttyS3                   proc/misc                   sbin/wipefs
+dev/console                 dev/ttyp0                   proc/modules                tmp/ifstate
+dev/i2c-0                   dev/ttyp1                   proc/mounts                 tmp/ledd_ctrl
+dev/i2c-1                   dev/ttyp2                   proc/mtd                    tmp/log
+dev/i2c-2                   dev/ttyp3                   proc/pagetypeinfo           tmp/messages
+dev/i2c-3                   dev/ttyp4                   proc/partitions             tmp/utmp
+dev/kmem                    dev/ttyp5                   proc/slabinfo
+dev/log                     dev/ttyp6                   proc/softirqs
+
+dev/gadget:
+
+dev/net:
+tun
+
+dev/pts:
+0
+
+dev/shm:
+
+etc/init.d:
+S01logging   S20urandom   S40network   S52mmt_ledd  S55camd      S56aclys     rcK          rcS
+
+etc/ld.so.conf.d:
+
+etc/network:
+if-down.d       if-post-down.d  if-post-up.d    if-pre-down.d   if-pre-up.d     if-up.d         interfaces
+
+home/default:
+
+home/ftp:
+
+lib/modules:
+2.6.39+
+
+mnt/storage:
+140731_17                      140802_22                      141231_08
+140731_18                      140803_04                      141231_09
+140731_19                      140803_09                      141231_10
+140731_20                      140803_20                      141231_11
+140731_22                      140803_23                      141231_12
+140731_23                      140804_01                      141231_13
+140801_01                      140804_02                      141231_14
+140801_06                      140804_14                      141231_15
+140801_07                      140804_15                      141231_16
+140801_11                      140804_16                      141231_17
+140801_16                      140804_19                      141231_18
+140801_17                      140804_20                      141231_19
+140801_20                      140804_23                      cid
+140802_03                      140805_00                      error_log.txt
+140802_06                      141230_13                      hw_revision
+140802_07                      141231_00                      lost+found
+140802_11                      141231_01                      os-release
+140802_12                      141231_02                      test
+140802_13                      141231_03                      upgrade_log_070101_000636.txt
+140802_14                      141231_04                      upgrade_log_140723_125516.txt
+140802_16                      141231_05                      upgrade_log_141230_131052.txt
+140802_17                      141231_06
+140802_20                      141231_07
+
+proc/1:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/12776:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/12783:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/12784:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/12794:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/12797:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/14262:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/14272:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/2:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/204:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/205:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/206:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/269:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/3:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/313:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/315:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/333:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/4:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/427:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/452:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/458:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/5:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/6:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/7:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/8:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/81:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/83:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/85:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/bus:
+input
+
+proc/cpu:
+alignment
+
+proc/driver:
+rtc
+
+proc/fs:
+ext4  jbd2  nfsd
+
+proc/irq:
+0    103  109  114  12   125  130  136  141  147  152  158  2    25   30   36   41   47   52   58   63   69   74   8    85   90   96
+1    104  11   115  120  126  131  137  142  148  153  159  20   26   31   37   42   48   53   59   64   7    75   80   86   91   97
+10   105  110  116  121  127  132  138  143  149  154  16   21   27   32   38   43   49   54   6    65   70   76   81   87   92   98
+100  106  111  117  122  128  133  139  144  15   155  17   22   28   33   39   44   5    55   60   66   71   77   82   88   93   99
+101  107  112  118  123  129  134  14   145  150  156  18   23   29   34   4    45   50   56   61   67   72   78   83   89   94
+102  108  113  119  124  13   135  140  146  151  157  19   24   3    35   40   46   51   57   62   68   73   79   84   9    95
+
+proc/net:
+arp           fib_trie      netstat       raw           snmp          stat          udplite
+dev           fib_triestat  protocols     route         sockstat      tcp           unix
+dev_mcast     netlink       ptype         rt_cache      softnet_stat  udp
+
+proc/scsi:
+device_info  scsi
+
+proc/self:
+auxv             cwd              limits           mountstats       pagemap          statm
+clear_refs       environ          maps             net              personality      status
+cmdline          exe              mem              oom_adj          root             task
+comm             fd               mountinfo        oom_score        smaps            wchan
+coredump_filter  fdinfo           mounts           oom_score_adj    stat
+
+proc/sys:
+debug   dev     fs      kernel  net     vm
+
+proc/sysvipc:
+msg  sem  shm
+
+proc/tty:
+driver   drivers  ldisc    ldiscs
+
+sys/block:
+loop0      loop2      loop4      loop6      mmcblk0    ram0       ram2
+loop1      loop3      loop5      loop7      mtdblock0  ram1       ram3
+
+sys/bus:
+hid       i2c       mmc       platform  scsi      sdio      serio     spi
+
+sys/class:
+bdi          firmware     input        misc         net          scsi_disk    spidev       uio
+block        gpio         leds         mmc_host     rtc          scsi_host    tty          vc
+dma          i2c-dev      mem          mtd          scsi_device  spi_master   ubi          vtconsole
+
+sys/dev:
+block  char
+
+sys/devices:
+platform  system    virtual
+
+sys/firmware:
+
+sys/fs:
+ext4
+
+sys/kernel:
+debug          mm             notes          uevent_helper  uevent_seqnum
+
+sys/module:
+aclys_gpio    atmel_mci     ext4          jbd2          lis3dh        mmc_block     nwfpe         scsi_mod      tcp_cubic
+ak8963        block         g_ether       kernel        lis3dh_i2c    mmc_core      printk        spidev        ubi
+at_hdmac      charge_gpio   hid           keyboard      mbcache       mmt_bootctrl  sam9x5_adc    spurious      vt
+
+sys/power:
+pm_async      state         wakeup_count
+
+usr/bin:
+[             cal           deallocvt     getconf       last          lzma          reset         tailf         uuidgen
+[[            chattr        diff          getopt        ldd           mcookie       resize        tee           vlock
+ar            chkdupexe     dirname       head          less          md5sum        rev           test          wc
+awk           chrt          dos2unix      hexdump       linux32       mesg          script        time          wget
+basename      chvt          du            hostid        linux64       microcom      scriptreplay  top           whereis
+bunzip2       cksum         dumpleases    i2cdetect     logger        mkfifo        seq           tr            which
+bzcat         clear         eject         i2cdump       logname       namei         setarch       traceroute    who
+bzcmp         cmp           env           i2cget        look          nohup         setkeycodes   tty           whoami
+bzdiff        col           expr          i2cset        lsattr        od            setsid        uniq          xargs
+bzegrep       colcrt        find          id            lscpu         openvt        sha1sum       unix2dos      xz
+bzfgrep       colrm         flock         install       lsof          passwd        sha256sum     unlzma        xzcat
+bzgrep        column        fold          ipcmk         lspci         patch         sha3sum       unxz          yes
+bzip2         crontab       free          ipcrm         lsusb         printf        sha512sum     unzip
+bzip2recover  cut           ftpget        ipcs          lua           readlink      sort          uptime
+bzless        cytune        ftpput        isosize       luac          realpath      strings       uudecode
+bzmore        dc            fuser         killall       lzcat         renice        tail          uuencode
+
+usr/lib:
+libblkid.so                 libcom_err.so.2.1           liblua.so                   libstdc++.so.6.0.14
+libbz2.so                   libe2p.so                   liblua.so.5.1.5             libstdc++.so.6.0.14-gdb.py
+libbz2.so.1                 libe2p.so.2                 libss.so                    libuuid.so
+libbz2.so.1.0               libe2p.so.2.3               libss.so.2                  lua
+libbz2.so.1.0.6             libext2fs.so                libss.so.2.0
+libcom_err.so               libext2fs.so.2              libstdc++.so
+libcom_err.so.2             libext2fs.so.2.4            libstdc++.so.6
+
+usr/sbin:
+acc_test        chroot          ext_test        fsck.ext4dev    loadfont        mklost+found    setlogcons
+addgroup        crond           fdformat        ftpd            logsave         mmc_power_test  stop_test
+adduser         delgroup        feed_dog        gps_rf_test     mag_test        mmc_test        telnetd
+arping          deluser         flashmode       gps_test        mke2fs          mmt_ledd        tune2fs
+badblocks       dumpe2fs        fsck            inetd           mkfs.ext2       rdate           tunelp
+bat_level_test  e2freefrag      fsck.ext2       init_test       mkfs.ext3       readprofile     udhcpd
+camd.lua        e2fsck          fsck.ext3       killall5        mkfs.ext4       rtcwake
+camd_test.lua   e2label         fsck.ext4       ldattach        mkfs.ext4dev    sensor_test
+
+usr/share:
+getopt  udhcpc
+
+var/cache:
+ifstate    ledd_ctrl  log        messages   utmp
+
+var/lib:
+misc    pcmcia
+
+var/lock:
+ifstate    ledd_ctrl  log        messages   utmp
+
+var/log:
+ifstate    ledd_ctrl  log        messages   utmp
+
+var/pcmcia:
+ifstate    ledd_ctrl  log        messages   utmp
+
+var/run:
+ifstate    ledd_ctrl  log        messages   utmp
+
+var/spool:
+ifstate    ledd_ctrl  log        messages   utmp
+
+var/tmp:
+ifstate    ledd_ctrl  log        messages   utmp
+
+var/www:
+
