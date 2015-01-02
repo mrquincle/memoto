@@ -13,6 +13,12 @@ Anyway, finally I found some time to start hacking the Memoto. Note, this hack o
 using the custom firmware on it. This is not reading out that firmware, or reverse engineering the firmware on the 
 device itself.
 
+## Screenshot
+
+So, you know it was a success before you've to read this long story. :-) 
+
+![telnet](dump/screenshot.png)
+
 ## Setup
 
 The setup is easy to imagine. We have to run a VirtualBox with Windows 7. First hurdle needs to be taken. By default
