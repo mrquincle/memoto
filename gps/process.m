@@ -1,6 +1,4 @@
-#!/bin/octave -f
-
-file="input"
+file='input';
 
 % If someone knows how to open a binary file in matlab where the values are bits, not bytes, please tell me
 
@@ -16,14 +14,14 @@ val(1:10)
 
 % Count total number of bits
 count=size(val,2);
-printf('There are %i complex samples\n', count);
+fprintf('There are %i complex samples\n', count);
 bits=2;
-printf('There are %i bits used for a complex number\n', bits);
+fprintf('There are %i bits used for a complex number\n', bits);
 values=1024;
-printf('There are %i complex numbers required per ms\n', values);
+fprintf('There are %i complex numbers required per ms\n', values);
 columns = (count/bits)/1024;
-printf('Then there are %i columns (and so %i ms) \n', columns, columns)
-printf('The default is 512 ms for the Aclys chip\n');
+fprintf('Then there are %i columns (and so %i ms) \n', columns, columns)
+fprintf('The default is 512 ms for the Aclys chip\n');
 
 % I only have some vague ideas on how to continue
 
@@ -32,8 +30,43 @@ printf('The default is 512 ms for the Aclys chip\n');
 
 
 % 1. The GPS L1 C/A signal is apparently represented by these 2-bits complex I+Q samples (one bit real, one bit imag.)
+I=val(1:2:end-1);
+Q=val(2:2:end);
+c=complex(I,Q);
+
+rows=values;
+sz=[rows columns];
+A=reshape(c,sz);
 
 % 2. We need to process N_col columns. It is not indicated how many columns that should be.
+
+%figure('Color','w','Position',[10 10 600 600]);
+figure
+hold on
+for i = 1:4
+
+	N_start=1+64*i;
+	N_col=64;
+	M_samp=A(:,N_start:N_start+N_col);
+
+	fftA=fft2(M_samp);
+
+	%nr = 1:size(fftA,1);
+	%nc = 1:size(fftA,2);
+	%[X,Y]=meshgrid(nc,nr);
+	B=abs(fftA);
+	%X=X';
+	%Y=Y';
+	%B=B';
+	% truncate to T
+	T=2000;
+	B=min(B,T);
+	%plot3(X,Y,B)
+	subplot(2,2,i);
+	surf(B);
+end
+
+%figure, imshow(abs(fftshift(fftA)),[24 100000]), colormap gray
 
 % 3. We need to account for Doppler
 
