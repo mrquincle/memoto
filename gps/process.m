@@ -32,41 +32,56 @@ fprintf('The default is 512 ms for the Aclys chip\n');
 % 1. The GPS L1 C/A signal is apparently represented by these 2-bits complex I+Q samples (one bit real, one bit imag.)
 I=val(1:2:end-1);
 Q=val(2:2:end);
-c=complex(I,Q);
+C=complex(I,Q);
 
 rows=values;
 sz=[rows columns];
-A=reshape(c,sz);
+A=reshape(C,sz);
+
+% just lazy way to get rid of artifacts by generating 2D transform from randomly generated noise
+% works quite well to remove the peak at zero
+%s=randn(1,1048576)<0;
+%sI=s(1:2:end-1);
+%sQ=s(2:2:end);
+%sC=complex(sI,sQ);
+%sA=reshape(sC,sz);
 
 % 2. We need to process N_col columns. It is not indicated how many columns that should be.
 
 %figure('Color','w','Position',[10 10 600 600]);
 figure
 hold on
-for i = 1:4
+N_col=32;
+items=512/N_col;
 
-	N_start=1+64*i;
-	N_col=64;
-	M_samp=A(:,N_start:N_start+N_col);
+% total number of items should be > pcol*prow
+pcol=3;
+prow=4;
+
+sumB=zeros(rows,N_col);
+for i = 1:pcol*prow
+	N_start=1+N_col*i;
+	M_samp=A(:,N_start:N_start+N_col-1);
+	%sM_samp=sA(:,N_start:N_start+N_col);
 
 	fftA=fft2(M_samp);
+	%A=sumA+fftA;
+	%fftsA=fft2(sM_samp);
 
-	%nr = 1:size(fftA,1);
-	%nc = 1:size(fftA,2);
-	%[X,Y]=meshgrid(nc,nr);
 	B=abs(fftA);
-	%X=X';
-	%Y=Y';
-	%B=B';
-	% truncate to T
-	T=2000;
-	B=min(B,T);
-	%plot3(X,Y,B)
-	subplot(2,2,i);
+	%sB=abs(fftsA);
+	% artifact at 0, remove it
+	B(1)=0;
+	%sB=min(sB,T);
+	%B=B-sB;
+	sumB=sumB+B;
+	subplot(prow,pcol,i);
 	surf(B);
 end
 
-%figure, imshow(abs(fftshift(fftA)),[24 100000]), colormap gray
+% sum of all the subplots
+figure
+surf(sumB);
 
 % 3. We need to account for Doppler
 
