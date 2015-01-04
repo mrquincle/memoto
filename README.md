@@ -13,6 +13,19 @@ Anyway, finally I found some time to start hacking the Memoto. Note, this hack o
 using the custom firmware on it. This is not reading out that firmware, or reverse engineering the firmware on the 
 device itself.
 
+## What is this?
+
+The following will be some description of the hack, but you can also just clone this repository and start using it. 
+What you will be able to do:
+
+* download files from the Memoto using the python script `memoto.py` using a Linux operating system (might be working
+on other platforms as well, just try it out and report back)
+* upload files to the Memoto using the same script `memoto.py` using a Linux operating system
+* enable a `developmental` option on the Memoto
+* subsequently the Memoto becomes available in a normal fashion to almost all modern operating systems 
+* change the frequency with which you snap pictures
+* use the Memoto as a fancy USB drive which also happens to take pictures
+
 ## Screenshot
 
 So, you know it was a success before you've to read this long story. :-) 
@@ -219,12 +232,30 @@ I understand that some people are really anxious in getting the GPS working prop
 
 There is a `memotod` binary in `/bin`. This is only 62kB and seems to contain also very little. Most of the code is dedicated to reading the sensors and pushing it to the host device using Linux-USB Gadget framework or `gadgetfs`. This is a pretty neat piece of code that allows you to communicate through just reading and writing to `/dev/gadget`.
 
+## Future proof
+
+To make sure that there is no new firmware uploaded that would make the above impossible, I would recommend to either
+deinstall the Memoto software or change one of the scripts on the memoto that is responsible for installing new 
+firmware. New firmware comes in a tar ball `update.tar` which unpacks to `update/update.sh`.  Just remove those lines
+in the script. This has a nice side-effect that if new firmware is send over by Memoto that it will be available at
+your service, without it getting installed. You can casually inspect what great updates are in there before you start
+using it. :-)
 
 ## Protocol
 
 To be done. Read the python script for now
 
 ## Copyrights
+
+Note that this is done independently by some random developer not associated with Memoto / Narrative. I have refrained
+from publishing their .lua and .sh scripts here, you can get them yourself if you want to. Their names are their 
+respective trademarks, etc. etc. I think the Narrative Clip is a neat piece of hardware and I'm grateful for them to
+have developed such a tiny camera package. I hope you guys will come up with nice new ways to use the Memoto just
+as with the Kinect, in ways not anticipated before. Note also that there have not been serious encryption measures put
+in place. Hence, it is likely that something similar to the Kinect has been the underlying line of thought. The Kinect
+was easy to `hack` on purpose (see articles from the original designer) and this indeed opened up a flurry of very
+interesting third-party applications. I sincerely hope that this might as well initiate a much large set of 
+applications than currently available from which the Narrative people benefit as well. Start coding!
 
 * Author: Anne van Rossum
 * License: LGPLv3, BSD, Apache, MIT, your choice
