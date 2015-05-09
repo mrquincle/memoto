@@ -6,7 +6,7 @@ file='input';
 %[val, count] = fread(fd);
 %fclose(fd);
 
-% Just load the ascii file instead
+% For now, just load the ascii file instead which is created by the `convert_bin.sh` script
 val=load(file);
 
 % Show the first 10 bits
