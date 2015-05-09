@@ -40,7 +40,7 @@ def print_strings(filename):
         #print ''.join('{:02x}'.format(x) for x in data[cnt:cnt+7])
         if data[cnt+4] == 4:
             print "Found directory: ",
-        else: 
+        else:
             print "Found file: ",
         end = cnt+11*12
         sret = ''.join([chr(x) for x in data[cnt+8:end]])
@@ -89,13 +89,19 @@ def usage():
 def setup_usb():
     # Tested only with the Cheeky Dream Thunder
     # and original USB Launcher
-    global dev 
+    global dev
     global dev_type
 
     dev = usb.core.find(idVendor=0xf0f0, idProduct=0x1337)
 
     if dev is None:
-        raise ValueError('Memoto device not found')
+        dev = usb.core.find(idVendor=0x525, idProduct=0xa4a1)
+        if dev is None:
+            raise ValueError('Memoto device not found')
+        else:
+        	   print "Found (ethernet-accessible) Memoto device"
+        	   print "You don't need to use this script anymore. Connect through it via ethernet now!"
+        	   exit()
     else:
         print "Found Memoto device"
         dev_type = "Memoto"
@@ -108,7 +114,7 @@ def setup_usb():
 
     # Set configuration does NOT claim the interface, we need this
     print "Claim interface"
-    usb.util.claim_interface(dev, 0) 
+    usb.util.claim_interface(dev, 0)
 
 # asumes path ends with /
 def get_file(path, fname):
@@ -120,14 +126,14 @@ def get_file(path, fname):
     time.sleep(3)
     #print "Send obtain file request"
     #send_cmd(0xc00402)
-    
+
     fullname = path + fname
     print "Send file request", fullname
     bmRequestType = 0x40
-    bRequest = 0x02 
+    bRequest = 0x02
     wIndex = 0x00
     ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, fullname)
- 
+
     opath = output_path + path
     fullname = opath + fname
     try:
@@ -139,10 +145,10 @@ def get_file(path, fname):
         os.remove(fullname)
     except OSError:
         pass
-    
+
     filetype = "JPEG"
     threading.Thread(target=bulk, args=[filetype, fullname]).start()
-    
+
 def upload_file(path, fname):
     #filetype="FILE_REQ"
     #threading.Thread(target, args=[filetype, fname]).start()
@@ -150,17 +156,17 @@ def upload_file(path, fname):
     #time.sleep(3)
     #print "Send obtain file request"
     #send_cmd(0xc00402)
-    
+
     fullname = path + fname
     print "Send upload file request", fullname
     bmRequestType = 0x40
-    bRequest = 0x10 
+    bRequest = 0x10
     wIndex = 0x00
     ret = dev.ctrl_transfer(bmRequestType, bRequest, 0, wIndex, fullname)
- 
+
     opath = output_path + path
     fullname = opath + fname
-    
+
     filetype = "JPEG"
     threading.Thread(target=bulk_out, args=[filetype, fullname]).start()
 
@@ -175,7 +181,7 @@ def get_list(path):
     threading.Thread(target=bulk, args=[filetype, path]).start()
 
     time.sleep(0.2)
-    
+
     print "Send file list request", path
     bmRequestType = 0x40
     bRequest = 0x09
@@ -188,12 +194,12 @@ def just_list(path):
         os.remove(tmpfile)
     except OSError:
         pass
-    
+
     filetype="LIST"
     threading.Thread(target=bulk, args=[filetype, path]).start()
 
     time.sleep(0.2)
-    
+
     print "Send file list request", path
     bmRequestType = 0x40
     bRequest = 0x09
@@ -289,10 +295,10 @@ def get_files(path, files):
 def bulk(filetype, filename):
     try:
         carg = 0x48;
-        length = carg << 8; 
+        length = carg << 8;
         # only after a long time the bulk transport will fail (required for large chunks, such as in images)
         timeout_sec = 30
-        ret = dev.read(0x81, length, timeout_sec * 1000) 
+        ret = dev.read(0x81, length, timeout_sec * 1000)
         if filetype == "JPEG":
             #print "Store chunk of length ", len(ret), " in ", filename
             data = bytearray(ret)
@@ -387,7 +393,7 @@ def bulk_out(filetype, filename):
     ret = dev.write(0x02, lbuf, 0)
 
     # I missed apparently one 13376 item (with overhead), and all items are 64 overhead
-    # < bulk |tr -s "  " " " | cut -f7 -d' ' | wc -l                
+    # < bulk |tr -s "  " " " | cut -f7 -d' ' | wc -l
     # 1111 (items in total)
     # first item has 4 bytes, so we have to extract that too
     # < bulk |tr -s "  " " " | cut -f7 -d' ' | paste -sd+ | xargs -I {} echo {}"-1111*64-4+(13376-64)" | bc
@@ -413,11 +419,11 @@ def imitate_windows():
     # then a request for 80: 6 3
     print "GET DESCRIPTOR Request STRING"
     product = usb.util.get_string(dev, dev.iProduct)
-    
+
     # check for serial, 80: 6 1
     print "GET DESCRIPTOR Request STRING"
     serial = usb.util.get_string(dev, dev.iSerialNumber)
-    
+
     print "SET CONFIGURATION Request"
     config = usb.control.get_configuration(dev)
 
@@ -425,7 +431,7 @@ def imitate_windows():
     print "GET DESCRIPTOR Request STRING"
     serial = usb.util.get_string(dev, dev.iSerialNumber)
     #print 'Serial: ', str(serial)
-   
+
     # two urb control in messages
     print "URB_CONTROL in"
     send_cmd(0xc020)
@@ -501,7 +507,7 @@ def run_command(command, values):
     command = command.lower()
     if command == "list":
         #imitate_windows()
-        #wake_up() 
+        #wake_up()
 
         if values[0]== "test":
                 fullpath="/mnt/storage/140802_16"
@@ -528,7 +534,7 @@ def run_command(command, values):
             core="140804_02"
             key2="0332"
             extension=".jpg"
-            key="45010053454d3038479025016f3f7071" 
+            key="45010053454d3038479025016f3f7071"
             fname = "event_" + core + key2 + "_" + key + extension
             path = path + "/" + core + "/"
         else:
@@ -537,7 +543,7 @@ def run_command(command, values):
 
         get_file(path, fname)
     elif command == "upload":
-        
+
         path = values[0]
         fname = values[1]
 
