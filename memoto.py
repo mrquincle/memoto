@@ -548,6 +548,9 @@ def run_command(command, values):
         fname = values[1]
 
         upload_file(path, fname)
+        print "Note: if you upload .dev_options.dat with ether: true, the script hangs at the end."
+        print "This is because the Memoto device shows up as different USB device"
+        print "Hence python cannot close this device anymore. It is expected behavior"
     else:
         print "Error: Unknown command: '%s'" % command
 
@@ -569,7 +572,7 @@ def main(args):
 
     run_command(command, values)
 
-    print "Thank you for using this script"
+    print "Thank you for using this script."
 
 if __name__ == '__main__':
     main(sys.argv)
