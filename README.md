@@ -6,7 +6,7 @@ Attention span of a mouse in an owl pellet? Hack your memoto by:
 	git clone https://github.com/walac/pyusb           # install pyusb for usb.core
 	sudo python setup.py install
 	git clone https://github.com/mrquincle/memoto      # install this repos
-   cd memoto
+	cd memoto
 	python memoto.py upload /mnt/storage .dev_options.dat
 	sudo ifconfig usb0 192.168.2.10                    # set static IP (disable DHCP!)
 	telnet 192.168.2.2
