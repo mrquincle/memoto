@@ -7,7 +7,7 @@ Attention span of a mouse in an owl pellet? Hack your memoto by:
 	sudo python setup.py install
 	git clone https://github.com/mrquincle/memoto      # install this repos
 	cd memoto
-	python memoto.py upload /mnt/storage .dev_options.dat
+	python memoto.py upload /mnt/storage/ .dev_options.dat
 	sudo ifconfig usb0 192.168.2.10                    # set static IP (disable DHCP!)
 	telnet 192.168.2.2
 
@@ -76,7 +76,7 @@ their [wiki](http://wiki.wireshark.org/CaptureSetup/USB):
 	sudo modprobe usbmon
 	# the following is your usbmonX number to use in wireshark
 	lsusb -d f0f0:1337 | cut -f2 -d' '
-	python memoto.py upload /mnt/storage .dev_options.dat
+	python memoto.py upload /mnt/storage/ .dev_options.dat
 
 In my case it connects to `Bus 3`, so let's start capturing in wireshark on /dev/usbmon3.
 
@@ -226,7 +226,7 @@ python script). Specifically, we are gonna upload the file `/mnt/storage/.dev_op
 
 Upload it through;
 
-	python memoto.py upload /mnt/storage .dev_options.dat
+	python memoto.py upload /mnt/storage/ .dev_options.dat
 
 Reconnect your device and suddenly you will see another interface appearing if your kernel supports `usbnet`. This will all be automatically triggered, pretty neat from the kernel guys!
 
