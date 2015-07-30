@@ -4,14 +4,18 @@ Attention span of a mouse in an owl pellet? Hack your memoto by:
 
 	sudo apt-get install python3.4 libusb-1.0-0 git    # or use your favorite installer
 	git clone https://github.com/walac/pyusb           # install pyusb for usb.core
+	cd pysub
 	sudo python setup.py install
+	cd ..
 	git clone https://github.com/mrquincle/memoto      # install this repos
 	cd memoto
 	sudo python memoto.py list /mnt/storage
 	sudo python memoto.py upload /mnt/storage/ .dev_options.dat
-	# now reconnect the USB cable
-	sudo ifconfig usb0 192.168.2.10                    # set static IP (disable DHCP!)
-	telnet 192.168.2.2
+	# reconnect the USB cable
+	# set static IP (disable DHCP!)
+	sudo ifconfig usb0 192.168.2.10 netmask 255.255.255.0 broadcast 192.168.2.255 
+	telnet 192.168.2.2                                 # the memoto device is at IP address 192.168.2.2 
+	# 192.168.2.10 is the address you assign to usb0 in order access the memoto at IP 192.168.2.2 
 
 If you can't figure it out, please ask your questions at <https://github.com/mrquincle/memoto/issues>.
 
