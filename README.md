@@ -1,6 +1,6 @@
 # tl;rd
 
-Attention span of a mouse in an owl pellet? Hack your memoto by:
+Attention span of a mouse in an owl pellet? Hack your memoto (clip 1 only!) by:
 
 	sudo apt-get install python3.4 libusb-1.0-0 git    # or use your favorite installer
 	git clone https://github.com/walac/pyusb           # install pyusb for usb.core
