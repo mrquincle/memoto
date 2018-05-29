@@ -244,7 +244,7 @@ The device is at `192.168.2.2`. A port scan reveals:
 
 And sure `ftp 192.168.2.2` and `telnet 192.168.2.2` works just fine.
 
-A directory list can be found in [this file](memoto/blob/master/dump/files). Sorry, the command `tree` wasn't in their busybox installation, so it doesn't look so nice. :-)
+A directory list can be found in [this file](https://github.com/mrquincle/memoto/blob/master/dump/files). Sorry, the command `tree` wasn't in their busybox installation, so it doesn't look so nice. :-)
 
 ## GPS
 
